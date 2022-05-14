@@ -66,12 +66,20 @@ namespace ResturantWebApi.Controllers
 
         //}
 
+
+
         [HttpPost("{id}")]
         public async Task<IActionResult> CreateOrUpdateProduct(Guid? id,ProductDto productDto)
         {
             if(id == null)
             {
+                if(!ModelState.IsValid)
+                {
+                    return BadRequest("Check your input!");
+                }
+
                 
+
             }
 
         }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ResturantWebApi.Domain.Entities
 {
-    public class ProductDto
+    public class ProductEntity
     {
         public string? ProductName { get; set; }
         public string? ProductDescription { get; set; }

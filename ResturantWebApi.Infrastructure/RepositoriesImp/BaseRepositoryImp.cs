@@ -10,19 +10,16 @@ namespace ResturantWebApi.Infrastructure.RepositoriesImp
     public class BaseRepositoryImp<T> : IBaseRepository<T> where T : class
     {
         protected ApplicationDbContext _db { get; set; }
-
         public BaseRepositoryImp(ApplicationDbContext db)
         {
             _db = db;
         }
-
-        public async Task<T> AddAsync(T entity)
+        public async Task<T> AddAsyncAsync(T entity)
         {
             await _db.Set<T>().AddAsync(entity);
             _db.SaveChanges();
             return entity;
         }
-
         public async Task<T> DeleteByIdAsync(Guid id)
         {
             var TT = await _db.Set<T>().FindAsync(id);
@@ -31,18 +28,19 @@ namespace ResturantWebApi.Infrastructure.RepositoriesImp
             _db.SaveChanges();
             return TT;
         }
-
         public async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _db.Set<T>().ToListAsync();
         }
-
         public async Task<T> GetByIdAsync(Guid id)
         {
             return await _db.Set<T>().FindAsync(id);
         }
-
-        public async Task<T> UpdateById(Guid id)
+        public async Task<T> GetByIdAsync(Guid? id)
+        {
+            return await _db.Set<T>().Include<>FindAsync(id);
+        }
+        public async Task<T> UpdateByIdAsync(Guid id)
         {
             var TT = await GetByIdAsync(id);
 
@@ -51,7 +49,6 @@ namespace ResturantWebApi.Infrastructure.RepositoriesImp
 
             return TT;
         }
-
         public async Task<T> DeleteByNameAsync(string Name)
         {
             var TT = await _db.Set<T>().SingleOrDefaultAsync<T>(n => n.Equals(Name));
@@ -63,7 +60,6 @@ namespace ResturantWebApi.Infrastructure.RepositoriesImp
             return TT;
 
         }
-
         public async Task<T> FindAnyAsync(Expression<Func<T, bool>> match, string[] includesFKdata = null)
         {
             IQueryable<T> query = _db.Set<T>();
@@ -78,7 +74,6 @@ namespace ResturantWebApi.Infrastructure.RepositoriesImp
 
             return await query.SingleOrDefaultAsync(match);
         }
-
         public async Task<IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> match, string[] includesFKdata = null)
         {
             IQueryable<T> query = _db.Set<T>();
@@ -93,14 +88,7 @@ namespace ResturantWebApi.Infrastructure.RepositoriesImp
 
             return await query.Where(match).ToListAsync();
 
-
         }
-
-        Task<T> IBaseRepository<T>.FindAllAsync(Expression<Func<T, bool>> match, string[] includesFKdata)
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<T> FindAll(Expression<Func<T, bool>> match, string[] includesFKdata = null, Expression<Func<T, object>> orderBy = null, string orderByDirection = OrderBy.Ascending)
         {
             IQueryable<T> Query = _db.Set<T>().Where(match);
@@ -121,10 +109,37 @@ namespace ResturantWebApi.Infrastructure.RepositoriesImp
             return Query.ToList(); 
 
         }
-
         public IEnumerable<T> GetAll()
         {
             return _db.Set<T>().ToList();
         }
+        public T Add(T entity)
+        {
+            _db.Set<T>().Add(entity);
+            _db.SaveChanges();
+
+            return entity;
+        }
+        public IEnumerable<T> BulkAdd(IEnumerable<T> entities)
+        {
+            _db.Set<T>().AddRange(entities);
+            _db.SaveChanges();
+            return entities;
+        }
+        public  T Update(T entity)
+        {
+            _db.Set<T>().Update(entity);
+
+            _db.SaveChanges();
+
+            return entity;
+        }
+        public async Task<T> AddAsync(T entity)
+        {
+           await _db.AddAsync(entity);
+           _db.SaveChanges();
+            return entity;
+        }
+        
     }
 }
