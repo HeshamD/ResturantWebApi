@@ -13,4 +13,8 @@
     </PackageReference>
   </ItemGroup>
 
+	<ItemGroup>
+		<ProjectReference Include="..\ResturantWebApi.Infrastructure\ResturantWebApi.Infrastructure.csproj" />
+	</ItemGroup>
+
 </Project>

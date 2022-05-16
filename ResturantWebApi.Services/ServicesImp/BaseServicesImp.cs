@@ -11,17 +11,32 @@ namespace ResturantWebApi.Services
 
         private readonly IBaseRepository<T> repository;
 
-        protected ApplicationDbContext _db { get; set; }
-
-        public BaseServicesImp(IBaseRepository<T> _repository, ApplicationDbContext db)
+        public BaseServicesImp(IBaseRepository<T> _repository)
         {
                 repository = _repository;
-                _db = db;
         }
 
-        public void CreateAndUpdate<T1>(ref T1 Dto, ref T1 Entity) where T1 : class
+        public void CreateAndUpdate(T Entity)
         {
-            throw new NotImplementedException();
+            //Create
+
+        }
+
+        public void Delete(Guid id)
+        {
+            
+            repository.DeleteByIdAsync(id);
+            
+        }
+
+        public IEnumerable<T> GetAll()
+        {
+            return repository.GetAll();
+        }
+
+        public async Task<T> GetByName(string name)
+        {
+            return await repository.GetByName(name);
         }
     }
 }

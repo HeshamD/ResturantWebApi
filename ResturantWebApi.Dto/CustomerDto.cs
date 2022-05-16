@@ -1,7 +1,7 @@
 ﻿
 
 
-namespace ResturantWebApi.Domain.Entities
+namespace ResturantWebApi.Dto
 {
     public class CustomerDto:PersonBaseDtoClass
     {

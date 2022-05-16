@@ -1,42 +1,40 @@
 ﻿
 
 
+
 namespace ResturantWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly IBaseRepository<ProductDto> _ProductRepository;
-
-        public ProductsController (IBaseRepository<ProductDto> ProductRepository)
+        private readonly IProductServices IprodcutServices;
+        public ProductsController (IProductServices _IprodcutServices)
         {
-            _ProductRepository = ProductRepository;
-        }
-
-        [HttpGet("GetAllProductsAsync")]
-        public async Task<IActionResult> GetAllProductsAsync()
-        {
-            return Ok(await _ProductRepository.GetAllAsync());
+            IprodcutServices = _IprodcutServices;
         }
 
         [HttpGet("GetAllProducts")]
         public IActionResult GetAllProducts()
         {
-            return Ok(_ProductRepository.GetAll());
+            return Ok(IprodcutServices.GetAll());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProductById(Guid id)
         {
-            return Ok(await _ProductRepository.GetByIdAsync(id));
+            return Ok(await IprodcutServices.GetById(id));
         }
 
         [HttpGet("GetByName")]
         public async Task<IActionResult> GetByName(string name)
         {
-            var Product = await _ProductRepository.FindAnyAsync(p=>p.ProductName == name);
-            return Ok(Product);
+            if(IprodcutServices.GetByName(name) == null)
+            {
+                return NotFound("The searched item not found!");
+            }
+
+           return Ok(IprodcutServices.GetByName(name));
         }
 
         
@@ -68,7 +66,7 @@ namespace ResturantWebApi.Controllers
 
 
 
-        [HttpPost("{id}")]
+        [HttpPost]
         public async Task<IActionResult> CreateOrUpdateProduct(Guid? id,ProductDto productDto)
         {
             if(id == null)
@@ -78,14 +76,36 @@ namespace ResturantWebApi.Controllers
                     return BadRequest("Check your input!");
                 }
 
-                
+                IprodcutServices.CreateAndUpdateProduct(productDto,null);
+
+                return Ok(productDto);
 
             }
+            
+            if(id.HasValue)
+            {
+                var product = IprodcutServices.GetById(id);
+
+                if(product == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    IprodcutServices.CreateAndUpdateProduct(productDto,id);
+                }
+            }
+
+            return BadRequest("Something Went Wrong");
 
         }
 
 
 
         //?GET All by Category
+
+        //GET All products with low in stock
+        //Get products with quantity
+        //Validation for input
     }
 }

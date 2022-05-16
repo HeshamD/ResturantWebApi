@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ResturantWebApi.Domain.Entities.BaseClasses
+namespace ResturantWebApi.Dto.BaseDtoClasses
 {
     public class PersonBaseDtoClass
     {

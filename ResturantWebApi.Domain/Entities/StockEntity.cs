@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace ResturantWebApi.Domain.Entities
 {
-    public class StockDto
+    public class StockEntity
     {
-
         public Guid ProductId { get; set;}
     }
 }

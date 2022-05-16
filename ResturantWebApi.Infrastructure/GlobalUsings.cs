@@ -5,3 +5,4 @@ global using System.Linq.Expressions;
 global using ResturantWebApi.Domain.Consts;
 global using ResturantWebApi.Infrastructure.FluentApis;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using ResturantWebApi.Infrastructure.RepositoriesImp;

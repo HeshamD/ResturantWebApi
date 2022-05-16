@@ -16,5 +16,7 @@ namespace ResturantWebApi.Domain.IRepositories
         public T Add(T entity);
         public IEnumerable<T> BulkAdd(IEnumerable<T> entities);
         public T Update(T entity);
+        public T FindIdWithIncludeData(Guid? id, string[] includesFKdata = null);
+        public Task<T> GetByName(string name);
     }
 }

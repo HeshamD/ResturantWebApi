@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ResturantWebApi.Domain.Entities
+namespace ResturantWebApi.Dto.OrderDtoRoot
 {
-    internal class OrderItemsDto
+    public class OrderItemsDto
     {
     }
 }

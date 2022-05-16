@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -21,6 +21,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ResturantWebApi.Domain\ResturantWebApi.Domain.csproj" />
+	<ProjectReference Include="..\ResturantWebApi.Dto\ResturantWebApi.Dto.csproj" />
+	<ProjectReference Include="..\ResturantWebApi.Infrastructure\ResturantWebApi.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

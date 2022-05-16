@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace ResturantWebApi.Infrastructure.RepositoriesImp
 {
     public class BaseRepositoryImp<T> : IBaseRepository<T> where T : class
@@ -14,7 +8,7 @@ namespace ResturantWebApi.Infrastructure.RepositoriesImp
         {
             _db = db;
         }
-        public async Task<T> AddAsyncAsync(T entity)
+        public async Task<T> AddAsync(T entity)
         {
             await _db.Set<T>().AddAsync(entity);
             _db.SaveChanges();
@@ -38,7 +32,7 @@ namespace ResturantWebApi.Infrastructure.RepositoriesImp
         }
         public async Task<T> GetByIdAsync(Guid? id)
         {
-            return await _db.Set<T>().Include<>FindAsync(id);
+            return await _db.Set<T>().FindAsync(id);
         }
         public async Task<T> UpdateByIdAsync(Guid id)
         {
@@ -51,7 +45,7 @@ namespace ResturantWebApi.Infrastructure.RepositoriesImp
         }
         public async Task<T> DeleteByNameAsync(string Name)
         {
-            var TT = await _db.Set<T>().SingleOrDefaultAsync<T>(n => n.Equals(Name));
+            var TT = await _db.Set<T>().SingleOrDefaultAsync(n => n.Equals(Name));
 
             _db.Set<T>().Remove(TT);
 
@@ -134,11 +128,24 @@ namespace ResturantWebApi.Infrastructure.RepositoriesImp
 
             return entity;
         }
-        public async Task<T> AddAsync(T entity)
+        public T FindIdWithIncludeData(Guid? id, string[] includesFKdata = null)
         {
-           await _db.AddAsync(entity);
-           _db.SaveChanges();
-            return entity;
+            IQueryable<T> query = _db.Set<T>();
+            
+            if(includesFKdata != null)
+            {
+                foreach(var includeFK in includesFKdata)
+                {
+                    query = query.Include(includeFK);
+                }    
+            }
+
+            return  ((DbSet<T>)query).Find(id);
+        }
+
+        public async Task<T> GetByName(string name)
+        {
+            return await _db.Set<T>().SingleOrDefaultAsync();
         }
         
     }

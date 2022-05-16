@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-
-
+﻿
 
 namespace ResturantWebApi.Services.ServicesImp
 {
@@ -42,16 +34,42 @@ namespace ResturantWebApi.Services.ServicesImp
             }
             else
             {
-                var product = _baseRepository.
+                var product = _baseRepository.FindIdWithIncludeData(id);
 
+                product.ProductName = productDto.ProductName;
+                product.ProductDescription = productDto.ProductDescription;
+                product.ReOrderPoint = productDto.ReOrderPoint;
+                product.SKU = productDto.SKU; 
+                product.ProductSalePrice = productDto.ProductSalePrice;
+                product.CategoryIdFK = productDto.CategoryIdFK;
+                product.ProductCostPrice = productDto.ProductCostPrice;
+                product.ProductQTY = productDto.ProductQTY;
 
-                
+                _baseRepository.Update(product);
 
             }
 
 
+        }
 
+        public void DeleteProduct(Guid productId)
+        {
+            _baseRepository.DeleteByIdAsync(productId);
+        }
 
+        public IEnumerable<ProductEntity> GetAll()
+        {
+            return _baseRepository.GetAll();
+        }
+
+        public async Task<ProductEntity> GetById(Guid? id)
+        {
+            return await _baseRepository.GetByIdAsync(id);
+        }
+
+        public async Task<ProductEntity> GetByName(string name)
+        {
+            return await _baseRepository.GetByName(name);
         }
     }
 }

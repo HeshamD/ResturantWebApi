@@ -10,5 +10,9 @@ namespace ResturantWebApi.Services.IServices
     public interface IProductServices
     {
         public void CreateAndUpdateProduct(ProductDto productDto, Guid? id);
+        public void DeleteProduct(Guid productId);
+        public IEnumerable<ProductEntity> GetAll();
+        public Task<ProductEntity> GetByName(string name);
+        public Task<ProductEntity> GetById(Guid? id);
     }
 }

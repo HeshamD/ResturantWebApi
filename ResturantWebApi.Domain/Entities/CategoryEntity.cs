@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ResturantWebApi.Domain.Entities
 {
-    public class CategoryDto
+    public class CategoryEntity
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]

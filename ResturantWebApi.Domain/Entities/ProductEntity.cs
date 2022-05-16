@@ -9,6 +9,7 @@ namespace ResturantWebApi.Domain.Entities
 {
     public class ProductEntity
     {
+        public Guid id { get; set; }
         public string? ProductName { get; set; }
         public string? ProductDescription { get; set; }
         public string? SKU { get; set; }

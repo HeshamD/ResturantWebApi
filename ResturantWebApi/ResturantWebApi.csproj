@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ResturantWebApi.Infrastructure\ResturantWebApi.Infrastructure.csproj" />
+    <ProjectReference Include="..\ResturantWebApi.Services\ResturantWebApi.Services.csproj" />
   </ItemGroup>
 
 </Project>

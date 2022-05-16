@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace ResturantWebApi.Infrastructure
 {
-    public class ProductFluentApi : IEntityTypeConfiguration<ProductDto>
+    public class ProductFluentApi : IEntityTypeConfiguration<ProductEntity>
     {
 
-        public void Configure(EntityTypeBuilder<ProductDto> builder)
+        public void Configure(EntityTypeBuilder<ProductEntity> builder)
         {
             builder.HasOne<CategoryDto>().WithMany().HasForeignKey(p=>p.CategoryIdFK);
         }
